@@ -1,0 +1,16 @@
+#!/bin/zsh
+dir_data=/Users/keturner/nc_files/CMIP6/mMPI
+for k in {1950..2010..20}; do
+	if [ $k -eq 2010 ]
+	then
+	idx_end=5
+	else
+	idx_end=20
+	fi
+	for i in {1..$idx_end}; do
+        	year=$((k+i-1))
+        	echo "Working on year $year"
+        	ncra -F -d time,$((12*i-11)),$((12*i)) $dir_data/co2mass_Amon_MPI-ESM1-2-LR_historical_r1i1p1f1_gn_$k*.nc $dir_data/MPI_gn_ann$year.nc
+	done	
+done
+ncrcat $dir_data/MPI_gn_ann{1950..2014}.nc $dir_data/co2mass_Ayr_MPI-ESM1-2-LR_historical_r1i1p1f1_gr_1950-2014.nc

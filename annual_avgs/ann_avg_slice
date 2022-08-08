@@ -1,0 +1,18 @@
+#!/bin/zsh
+for k in {185..200}; do
+	if [ $k -eq 185 ]
+	then    
+	for i in {1..11}; do
+        	year=$((k*10+i-1))
+        	echo "Working on year $year"
+        	ncra -F -d time,$((12*i-11)),$((12*i)) thetao_Omon_CanESM2_historical_r1i1p1_$k*.nc $year.nc
+	done	
+	else    
+	for i in {1..10}; do
+		year=$((k*10+i))
+		echo "Working on year $year"
+		ncra -F -d time,$((12*i-11)),$((12*i)) thetao_Omon_CanESM2_historical_r1i1p1_$k*.nc $year.nc
+	done
+	fi
+done
+ncrcat -n 156,4,1 1850.nc CanESM2_historical_ocean_r1i1p1_thetao_annavg_1850-2005.nc

@@ -1,0 +1,17 @@
+#!/bin/zsh
+data_dir=/Users/keturner/nc_files/CMIP6/mCanESM
+enum=r14i1p1f1
+for k in {194..201}; do
+	if [ $k -eq 201 ]
+	then  
+	idx_end=4
+	else
+	idx_end=10  
+	fi    
+	for i in {1..$idx_end}; do
+		year=$((k*10+i))
+		echo "Working on year $year"
+		ncra -F -d time,$((12*i-11)),$((12*i)) $data_dir/so_Omon_CanESM5_historical_${enum}_gn_$k*.nc $data_dir/Can_ann$year.nc
+	done
+done
+ncrcat $data_dir/Can_ann{1950..2014}.nc $data_dir/so_Oyr_CanESM5_historical_${enum}_gn_1950-2014.nc

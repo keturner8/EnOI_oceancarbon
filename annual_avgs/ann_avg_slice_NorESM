@@ -1,0 +1,19 @@
+#!/bin/zsh
+dir_data=/Users/keturner/nc_files/CMIP6/mNorESM
+for k in {195..201}; do
+	if [ $k -eq 201 ]
+	then    
+	for i in {1..5}; do
+        	year=$((k*10+i-1))
+        	echo "Working on year $year"
+        	ncra -F -d time,$((12*i-11)),$((12*i)) $dir_data/so_Omon_NorESM2-LM_historical_r1i1p1f1_gr_$k*.nc $dir_data/Nor_gr_ann$year.nc
+	done	
+	else    
+	for i in {1..10}; do
+		year=$((k*10+i-1))
+		echo "Working on year $year"
+		ncra -F -d time,$((12*i-11)),$((12*i)) $dir_data/so_Omon_NorESM2-LM_historical_r1i1p1f1_gr_$k*.nc $dir_data/Nor_gr_ann$year.nc
+	done
+	fi
+done
+ncrcat $dir_data/Nor_gr_ann{1950..2014}.nc $dir_data/so_Oyr_NorESM2-LM_historical_r1i1p1f1_gr_1950-2014.nc

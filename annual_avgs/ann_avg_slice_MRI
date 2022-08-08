@@ -1,0 +1,10 @@
+#!/bin/zsh
+dir_data=/Users/keturner/nc_files/CMIP6/mMRI
+for k in {1850..1851}; do
+	for i in {101..165}; do
+        	year=$((k+i-1))
+        	echo "Working on year $year"
+        	ncra -F -d time,$((12*i-11)),$((12*i)) $dir_data/co2mass_Amon_MRI-ESM2-0_historical_r1i2p1f1_gm_$k*.nc $dir_data/MRI_gm_ann$year.nc
+	done	
+done
+ncrcat $dir_data/MRI_gm_ann{1950..2014}.nc $dir_data/co2mass_Ayr_MRI-ESM2-0_historical_r1i2p1f1_gm_1950-2014.nc

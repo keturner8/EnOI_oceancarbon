@@ -1,0 +1,16 @@
+#!/bin/zsh
+dir_data=/Users/keturner/nc_files/CMIP6/mUKESM
+for k in {1950..2000..50}; do
+	if [ $k -eq 1950 ]
+	then
+	idx_end=50
+	else
+	idx_end=15
+	fi
+	for i in {1..$idx_end}; do
+        	year=$((k+i-1))
+        	echo "Working on year $year"
+        	ncra -F -d time,$((12*i-11)),$((12*i)) $dir_data/so_Omon_UKESM1-0-LL_historical_r8i1p1f2_gn_$k*.nc $dir_data/UKESM_ann$year.nc
+	done	
+done
+ncrcat $dir_data/UKESM_ann{1950..2014}.nc $dir_data/so_Oyr_UKESM1-0-LL_historical_r8i1p1f2_gn_1950-2014.nc

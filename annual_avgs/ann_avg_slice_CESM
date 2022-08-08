@@ -1,0 +1,12 @@
+#!/bin/zsh
+dir_data=/Users/keturner/nc_files/CMIP6/mCESM2
+echo "$dir_data"
+for k in 185; do   
+	for i in {101..165}; do
+        	year=$((k*10+i-1))
+        	echo "Working on year $year"
+        	ncra -F -d time,$((12*i-11)),$((12*i)) $dir_data/so_Omon_CESM2_historical_r5i1p1f1_gr_$k*.nc $dir_data/CESM_ann$year.nc
+	done	
+done
+ncrcat $dir_data/CESM_ann{1950..2014}.nc $dir_data/so_Oyr_CESM2_historical_r5i1p1f1_gr_1950-2014.nc
+rm $dir_data/CESM_ann*

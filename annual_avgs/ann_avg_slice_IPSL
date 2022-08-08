@@ -1,0 +1,12 @@
+#!/bin/zsh
+dir_data=/Users/keturner/nc_files/CMIP6/mIPSL
+echo "$dir_data"
+for k in 195; do   
+	for i in {1..65}; do
+        	year=$((k*10+i-1))
+        	echo "Working on year $year"
+        	ncra -F -d time,$((12*i-11)),$((12*i)) $dir_data/so_Omon_IPSL-CM6A-LR_historical_r32i1p1f1_gn_$k*.nc $dir_data/IPSL_ann$year.nc
+	done	
+done
+ncrcat $dir_data/IPSL_ann{1950..2014}.nc $dir_data/so_Oyr_IPSL-CM6A-LR_historical_r32i1p1f1_gn_1950-2014.nc
+rm $dir_data/IPSL_ann*

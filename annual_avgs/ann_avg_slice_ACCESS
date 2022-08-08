@@ -1,0 +1,17 @@
+#!/bin/zsh
+dir_data=/Users/keturner/nc_files/CMIP6/mACCESS
+enum=r6i1p1f1
+for k in {195..201}; do
+	if [ $k -eq 201 ]
+	then    
+	idx_end=5
+	else
+	idx_end=10
+	fi
+	for i in {1..$idx_end}; do
+		year=$((k*10+i-1))
+		echo "Working on year $year"
+		ncra -F -d time,$((12*i-11)),$((12*i)) $dir_data/so_Omon_ACCESS-ESM1-5_historical_${enum}_gn_$k*.nc $dir_data/ACCESS_ann$year.nc
+	done
+done
+ncrcat $dir_data/ACCESS_ann{1950..2014}.nc $dir_data/so_Oyr_ACCESS-ESM1-5_historical_${enum}_gn_1950-2014.nc

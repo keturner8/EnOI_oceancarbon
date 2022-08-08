@@ -1,0 +1,18 @@
+#!/bin/zsh
+for k in {195..201..2}; do
+	if [ $k -eq 201 ]
+	then    
+	for i in {1..5}; do
+        	year=$((k*10+i-1))
+        	echo "Working on year $year"
+        	ncra -F -d time,$((12*i-11)),$((12*i)) thetao_Omon_GFDL-ESM4_historical_r1i1p1f1_gn_$k*.nc GFDL_gn_ann$year.nc
+	done	
+	else    
+	for i in {1..20}; do
+		year=$((k*10+i-1))
+		echo "Working on year $year"
+		ncra -F -d time,$((12*i-11)),$((12*i)) thetao_Omon_GFDL-ESM4_historical_r1i1p1f1_gn_$k*.nc GFDL_gn_ann$year.nc
+	done
+	fi
+done
+ncrcat GFDL_gn_ann{1950..2014}.nc ../thetao_Oyr_GFDL-ESM4_historical_r1i1p1f1_gn_1950-2014.nc
